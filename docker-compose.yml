@@ -1,0 +1,24 @@
+version: "3"
+services:
+  backend:
+    build:
+      context: ./server # beservice1 -> backend Service 1
+    image: express:latest
+    container_name: backend
+    ports:
+      - 3000:3000
+    volumes:
+      - /usr/src/app/node_modules
+      - ./server:/usr/src/app
+  frontend:
+    build:
+      context: ./
+    image: frontend:latest
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - 80:80
+    volumes:
+      - /usr/local/app/node_modules
+      - ./src:/usr/local/app
